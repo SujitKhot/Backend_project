@@ -1,0 +1,16 @@
+{
+  "name": "backend_project",
+  "version": "1.0.0",
+  "description": "first backend project to learn and explore tach and improve logic",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Nodejs",
+    "Javascript",
+    "Backend"
+  ],
+  "author": "Sujit Khot",
+  "license": "ISC"
+}
