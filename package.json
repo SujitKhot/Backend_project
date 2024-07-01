@@ -2,9 +2,10 @@
   "name": "backend_project",
   "version": "1.0.0",
   "description": "first backend project to learn and explore tach and improve logic",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [
     "Nodejs",
@@ -12,5 +13,8 @@
     "Backend"
   ],
   "author": "Sujit Khot",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
 }
