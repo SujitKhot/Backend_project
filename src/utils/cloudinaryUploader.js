@@ -16,7 +16,7 @@ export const cloudinaryUploadHandler = async (localFileUrl) => {
     fs.unlinkSync(localFileUrl);
     return response;
   } catch (error) {
-    fs.unlink(localFileUrl);
+    fs.unlinkSync(localFileUrl);
     return null;
   }
 };

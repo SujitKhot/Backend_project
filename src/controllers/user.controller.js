@@ -21,15 +21,16 @@ const registerUser = asynchHandler(async (req, res) => {
       throw new ApiError(400, "username is Required !");
   }
 
-  const existedUser = User.findOne({
+  const existedUser = await User.findOne({
     $or: [{ username }, { email }],
   });
 
-  if (!existedUser)
+  if (existedUser) {
     throw new ApiError(409, "User with username or email already exist !");
+  }
 
-  const avatarLocalFile = req?.files?.avatar?.path;
-  const coverImageLocalFile = req?.files?.coverImage?.path;
+  const avatarLocalFile = req?.files?.avatar?.[0]?.path;
+  const coverImageLocalFile = req?.files?.coverImage?.[0]?.path;
 
   if (!avatarLocalFile) {
     throw new ApiError(400, "Avatar is Required !");
@@ -45,7 +46,7 @@ const registerUser = asynchHandler(async (req, res) => {
     );
   }
 
-  const user = User.create({
+  const user = await User.create({
     fullName,
     username,
     email,
@@ -53,8 +54,9 @@ const registerUser = asynchHandler(async (req, res) => {
     avatar: avatar.url,
     coverImage: coverImage.url || "",
   });
-
-  const createdUser = User.findById(user._id).select("-password -refreshToken");
+  const createdUser = await User.findById(user._id).select(
+    "-password -refreshToken"
+  );
 
   if (!createdUser) {
     throw new ApiError(500, "could not create User deu to some issue !");
