@@ -88,7 +88,7 @@ const registerUser = asynchHandler(async (req, res) => {
 const logInUser = asynchHandler(async (req, res) => {
   const { username, password, email } = req.body;
 
-  if (!username || !email) {
+  if (!(username || email)) {
     throw new ApiError(500, "invalid username or emial !");
   }
 
