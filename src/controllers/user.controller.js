@@ -216,4 +216,51 @@ const refreshAccessToken = asynchHandler(async (req, res) => {
   }
 });
 
-export { registerUser, logInUser, logOutUser, refreshAccessToken };
+const changeCurrentPassword = asynchHandler(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  try {
+    const user = req.user;
+
+    const loggedInUser = await User.findById(user._id);
+
+    if (!loggedInUser) {
+      throw new ApiError(400, "User not found");
+    }
+
+    const isPassValid = await loggedInUser.isPasswordCorrect(oldPassword);
+
+    if (!isPassValid) {
+      throw new ApiError(400, "Invalid Password");
+    }
+
+    loggedInUser.password = newPassword;
+
+    await loggedInUser.save({ validateBeforeSave: false });
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Password changed Successfully"));
+  } catch (error) {
+    throw new ApiError(500, "something went wrong while changing password");
+  }
+});
+
+const getCurrentUser = asynchHandler(async (req, res) => {
+  const user = req.user;
+  try {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, user, "current user fetched successfully"));
+  } catch (error) {
+    new new ApiError(500, "Something went wrong while fetching user ")();
+  }
+});
+
+export {
+  registerUser,
+  logInUser,
+  logOutUser,
+  refreshAccessToken,
+  changeCurrentPassword,
+  getCurrentUser,
+};
