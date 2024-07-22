@@ -1,4 +1,4 @@
-import { asynchHandler } from "../utils/asyncHandler.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/User.model.js";
@@ -23,7 +23,7 @@ const generateAccessTokenAndRefreshToken = async (userId) => {
   }
 };
 
-const registerUser = asynchHandler(async (req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
   const { fullName, email, password, username } = req.body;
 
   switch ("") {
@@ -86,7 +86,7 @@ const registerUser = asynchHandler(async (req, res) => {
     .json(new ApiResponse(200, createdUser, "User created Successfully !"));
 });
 
-const logInUser = asynchHandler(async (req, res) => {
+const logInUser = asyncHandler(async (req, res) => {
   const { username, password, email } = req.body;
 
   if (!(username || email)) {
@@ -136,7 +136,7 @@ const logInUser = asynchHandler(async (req, res) => {
     );
 });
 
-const logOutUser = asynchHandler(async (req, res) => {
+const logOutUser = asyncHandler(async (req, res) => {
   const { _id } = req.user;
 
   await User.findByIdAndUpdate(
@@ -163,7 +163,7 @@ const logOutUser = asynchHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "User LoggedOut Successfully"));
 });
 
-const refreshAccessToken = asynchHandler(async (req, res) => {
+const refreshAccessToken = asyncHandler(async (req, res) => {
   const incommingRefreshToken =
     req.cookies.refreshToken || req.body.refreshToken;
 
@@ -216,7 +216,7 @@ const refreshAccessToken = asynchHandler(async (req, res) => {
   }
 });
 
-const changeCurrentPassword = asynchHandler(async (req, res) => {
+const changeCurrentPassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   try {
     const user = req.user;
@@ -245,7 +245,7 @@ const changeCurrentPassword = asynchHandler(async (req, res) => {
   }
 });
 
-const getCurrentUser = asynchHandler(async (req, res) => {
+const getCurrentUser = asyncHandler(async (req, res) => {
   const user = req.user;
   try {
     return res
