@@ -92,15 +92,12 @@ const logInUser = asyncHandler(async (req, res) => {
   if (!(username || email)) {
     throw new ApiError(500, "invalid username or emial !");
   }
-
   const user = await User.findOne({
     $or: [{ username }, { email }],
   });
-
   if (!user) {
     throw new ApiError(404, "User with username or email not found !");
   }
-
   const isPasswordvalid = await user.isPasswordCorrect(password);
 
   if (!isPasswordvalid) {
