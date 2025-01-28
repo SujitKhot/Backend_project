@@ -26,6 +26,10 @@ const generateAccessTokenAndRefreshToken = async (userId) => {
 const registerUser = asyncHandler(async (req, res) => {
   const { fullName, email, password, username } = req.body;
 
+  if (!fullName) {
+    return;
+  }
+
   switch ("") {
     case fullName:
       throw new ApiError(400, "fullName is Required !");
